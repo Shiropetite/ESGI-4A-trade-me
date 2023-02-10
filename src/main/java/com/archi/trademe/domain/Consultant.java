@@ -1,21 +1,20 @@
 package com.archi.trademe.domain;
 
 import java.util.List;
-import java.util.Objects;
 
 public final class Consultant {
 
     private final String id;
     private String firstname;
     private String lastname;
-
-    private List<String> domains; // Domaines d'expertises
+    private List<String> fieldsOfExpertise; // Domaines d'expertise
+    // private List<String> disponibities;
 
     public Consultant(String id, String firstname, String lastname, List<String> domains) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.domains = domains;
+        this.fieldsOfExpertise = domains;
     }
 
     public String getId() {
@@ -30,8 +29,8 @@ public final class Consultant {
         return lastname;
     }
 
-    public List<String> getDomains() {
-        return domains;
+    public List<String> getFieldsOfExpertise() {
+        return fieldsOfExpertise;
     }
 
     public void setFirstname(String firstname) {
@@ -42,20 +41,8 @@ public final class Consultant {
         this.lastname = lastname;
     }
 
-    public void setDomains(List<String> domains) {
-        this.domains = domains;
+    public void setFieldsOfExpertise(List<String> fieldsOfExpertise) {
+        this.fieldsOfExpertise = fieldsOfExpertise;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Consultant that = (Consultant) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname) && Objects.equals(domains, that.domains);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstname, lastname, domains);
-    }
 }
