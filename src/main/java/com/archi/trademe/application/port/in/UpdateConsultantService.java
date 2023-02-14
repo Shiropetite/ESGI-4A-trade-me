@@ -4,6 +4,6 @@ import com.archi.trademe.domain.Consultant;
 
 public interface UpdateConsultantService {
 
-    void update(String id, Consultant consultant);
+    Consultant update(String id, Consultant consultant);
 
 }

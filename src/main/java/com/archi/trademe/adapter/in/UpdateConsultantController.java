@@ -15,8 +15,8 @@ public class UpdateConsultantController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable String id, @RequestBody Consultant modifiedConsultant) {
-        this.service.update(id, modifiedConsultant);
+    public Consultant update(@PathVariable String id, @RequestBody Consultant modifiedConsultant) {
+        return this.service.update(id, modifiedConsultant);
     }
 
 }
