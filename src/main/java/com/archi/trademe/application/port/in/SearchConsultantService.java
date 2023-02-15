@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface SearchConsultantService {
 
-    List<Consultant> search();
+    List<Consultant> search(String fieldOfExpertise, String modality, String availability);
 
 }

@@ -16,9 +16,13 @@ public class SearchConsultantController {
         this.service = service;
     }
 
-    @GetMapping
-    public List<Consultant> search() {
-        return this.service.search();
+    @GetMapping()
+    public List<Consultant> search(
+        @RequestParam(required = false) String fieldOfExpertise,
+        @RequestParam(required = false) String modality,
+        @RequestParam(required = false) String availability
+    ) {
+        return this.service.search(fieldOfExpertise, modality, availability);
     }
 
 }

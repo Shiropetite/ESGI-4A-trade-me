@@ -14,11 +14,26 @@ public class CreateConsultantServiceImpl implements CreateConsultantService {
     public CreateConsultantServiceImpl(CreateConsultantRepository repository) { this.repository = repository; }
 
     public Consultant create(Consultant consultant) {
-        // Consultants have to have at least one field of expertise
-        if (consultant.getFieldsOfExpertise().size() == 0) {
-            NotificationSender.getInstance().raise("ERR - Consultant don't have any field of expertises");
-            throw new RuntimeException("Consultant don't have any field of expertises");
+
+        if (consultant.isFieldsOfExpertiseInvalid()) {
+            var message = "Consultant doesn't have any fields of expertise";
+            NotificationSender.getInstance().raise("ERR - " + message);
+            throw new RuntimeException(message);
         }
+
+        var invalidAvailability = consultant.isAvailabilitiesValid();
+        if (invalidAvailability != null) {
+            var message = "The availability : " + invalidAvailability + " isn't valid";
+            NotificationSender.getInstance().raise("ERR - " + message);
+            throw new RuntimeException(message);
+        }
+
+        if (consultant.isModalityInvalid()) {
+            var message = "The modality : " + consultant.getModality() + " isn't valid";
+            NotificationSender.getInstance().raise("ERR - " + message);
+            throw new RuntimeException(message);
+        }
+
         var consultantCreated = repository.create(consultant);
         NotificationSender.getInstance().raise("INFO - Consultant has been correctly created : " + consultantCreated);
         return consultantCreated;

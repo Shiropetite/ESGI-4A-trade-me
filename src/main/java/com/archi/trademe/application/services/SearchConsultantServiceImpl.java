@@ -15,8 +15,8 @@ public class SearchConsultantServiceImpl implements SearchConsultantService {
 
     public SearchConsultantServiceImpl(SearchConsultantRepository repository) { this.repository = repository; }
 
-    public List<Consultant> search() {
-        var consultants = repository.search();
+    public List<Consultant> search(String fieldOfExpertise, String modality, String availability) {
+        var consultants = repository.search(fieldOfExpertise, modality, availability);
         NotificationSender.getInstance().raise("INFO: Search consultant result : " + consultants);
         return consultants;
     }
