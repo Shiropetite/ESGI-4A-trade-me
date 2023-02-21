@@ -6,39 +6,51 @@ import com.archi.trademe.application.port.out.UpdateConsultantRepository;
 import com.archi.trademe.domain.Consultant;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UpdateConsultantServiceImpl implements UpdateConsultantService {
 
-    private final UpdateConsultantRepository consultantRepository;
+    private final UpdateConsultantRepository repository;
 
     public UpdateConsultantServiceImpl(UpdateConsultantRepository consultantRepository) {
-        this.consultantRepository = consultantRepository;
+        this.repository = consultantRepository;
     }
 
     public Consultant update(String id, Consultant consultant) {
 
-        if (consultant.isFieldsOfExpertiseInvalid()) {
-            var message = "Consultant doesn't have any fields of expertise";
+        var consultantDB = this.repository.findById(UUID.fromString(id));
+
+        if (consultantDB == null) {
+            var message = "Consultant with id : " + id + " does not exist" ;
             NotificationSender.getInstance().raise("ERR - " + message);
             throw new RuntimeException(message);
         }
 
-        var invalidAvailability = consultant.isAvailabilitiesValid();
+        var consultantToCreate = new Consultant(UUID.fromString(id), consultant);
+
+        if (consultantToCreate.isFieldsOfExpertiseInvalid()) {
+            var message = "Consultant does not have any fields of expertise";
+            NotificationSender.getInstance().raise("ERR - " + message);
+            throw new RuntimeException(message);
+        }
+
+        var invalidAvailability = consultantToCreate.isAvailabilitiesValid();
         if (invalidAvailability != null) {
-            var message = "The availability : " + invalidAvailability + " isn't valid";
+            var message = "The availability : " + invalidAvailability + " is not valid";
             NotificationSender.getInstance().raise("ERR - " + message);
             throw new RuntimeException(message);
         }
 
-        if (consultant.isModalityInvalid()) {
-            var message = "The modality : " + consultant.getModality() + " isn't valid";
+        if (consultantToCreate.isModalityInvalid()) {
+            var message = "The modality : " + consultantToCreate.getModality() + " is not valid";
             NotificationSender.getInstance( ).raise("ERR - " + message);
             throw new RuntimeException(message);
         }
 
-        consultantRepository.update(id, consultant);
-        NotificationSender.getInstance().raise("INFO - Consultant has been correctly updated : " + consultant);
-        return consultant;
+        var saveConsultant = repository.save(consultantToCreate);
+        NotificationSender.getInstance().raise("INFO - Consultant has been correctly updated : " + saveConsultant);
+        return saveConsultant;
     }
 
 }

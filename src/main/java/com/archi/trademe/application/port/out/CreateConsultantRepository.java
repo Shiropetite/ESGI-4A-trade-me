@@ -4,6 +4,6 @@ import com.archi.trademe.domain.Consultant;
 
 public interface CreateConsultantRepository {
 
-    Consultant create(Consultant newConsultant);
+    Consultant save(Consultant newConsultant);
 
 }

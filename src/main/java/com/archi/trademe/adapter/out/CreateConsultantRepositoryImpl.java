@@ -6,7 +6,7 @@ import com.archi.trademe.domain.Consultant;
 public class CreateConsultantRepositoryImpl implements CreateConsultantRepository {
 
     @Override
-    public Consultant create(Consultant newConsultant) {
+    public Consultant save(Consultant newConsultant) {
         InMemoryConsultant.getInstance().save(newConsultant);
         return InMemoryConsultant.getInstance().findById(newConsultant.getId());
     }

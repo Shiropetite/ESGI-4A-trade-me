@@ -21,14 +21,14 @@ public final class Consultant {
         this.id = UUID.randomUUID();
     }
 
-    public Consultant(String firstname, String lastname, String modality, Double averageDailyRate, List<String> fieldsOfExpertise, List<String> availabilities) {
-        this.id = UUID.randomUUID();
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.modality = modality;
-        this.averageDailyRate = averageDailyRate;
-        this.fieldsOfExpertise = fieldsOfExpertise;
-        this.availabilities = availabilities;
+    public Consultant(UUID id, Consultant consultant) {
+        this.id = id;
+        this.firstname = consultant.firstname;
+        this.lastname = consultant.lastname;
+        this.modality = consultant.modality;
+        this.averageDailyRate = consultant.averageDailyRate;
+        this.fieldsOfExpertise = consultant.fieldsOfExpertise;
+        this.availabilities = consultant.availabilities;
     }
 
     /**
@@ -77,52 +77,16 @@ public final class Consultant {
         return id;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
     public List<String> getFieldsOfExpertise() {
         return fieldsOfExpertise;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public void setFieldsOfExpertise(List<String> fieldsOfExpertise) {
-        this.fieldsOfExpertise = fieldsOfExpertise;
     }
 
     public String getModality() {
         return modality;
     }
 
-    public void setModality(String modality) {
-        this.modality = modality;
-    }
-
-    public Double getAverageDailyRate() {
-        return averageDailyRate;
-    }
-
-    public void setAverageDailyRate(Double averageDailyRate) {
-        this.averageDailyRate = averageDailyRate;
-    }
-
     public List<String> getAvailabilities() {
         return availabilities;
-    }
-
-    public void setAvailabilities(List<String> availabilities) {
-        this.availabilities = availabilities;
     }
 
     @Override
